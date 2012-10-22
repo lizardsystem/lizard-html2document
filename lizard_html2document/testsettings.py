@@ -41,7 +41,7 @@ SITE_ID = 1
 SECRET_KEY = 'This is not secret but that is ok.'
 INSTALLED_APPS = [
     'lizard_html2document',
-    'lizard_ui',
+    'lizard_worker',
     'staticfiles',
     'compressor',
     'south',
@@ -80,6 +80,6 @@ STATICFILES_FINDERS = STATICFILES_FINDERS
 
 try:
     # Import local settings that aren't stored in svn/git.
-    from lizard_html2document.local_testsettings import *
+    from lizard_html2document.localsettings import *
 except ImportError:
     pass
