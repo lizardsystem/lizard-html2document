@@ -7,7 +7,6 @@ from lizard_worker.worker.broker_connection import BrokerConnection
 from lizard_worker.worker.message_logging_handler import AMQPMessageHandler
 #from lizard_worker.models import WorkflowTask
 from django.conf import settings
-
 import logging
 log = logging.getLogger("converter.start_rpc_client")
 
@@ -29,16 +28,18 @@ class ConverterRpcClient(object):
     def on_response(self, ch, method, props, body):
         self.response = body
         print "On_response"
+        # f = open("/tmp/test10.docx", "w")
+        # f.write(body.get("MESSAGE"))
+        # f.close()
         if self.connection.is_open:
             self.connection.close()
         #if connection is None:
         #    log.error("Could not connect to broker.")
         #return
 
-    def call(self, html, convert_to):
+    def call(self, html, convert_to, queue_code):
         html = "<html><body>Test</body></html>"
         keys = settings.QUEUES.keys()
-        queue_code = keys[0] if len(keys) > 0 else "9999"
         self.response = None
         action = ActionConverterPublisher(
             self.connection, queue_code, html, self.response_queue, convert_to)

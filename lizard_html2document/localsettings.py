@@ -1,5 +1,6 @@
 PATH_CONVERTER_PROGRAMM = "..\worker_batches\converter.exe"
-TMP = "C:\temp"
+#TMP = "C:\temp"
+#TMP = "/home/alexandr/Downloads/test_html10.docx"
 
 BROKER_SETTINGS = {
     "BROKER_HOST": "localhost",
@@ -18,6 +19,12 @@ QUEUES = {
     "210": {
         "exchange": "router",
         "binding_key": "210"},
+    "logging": {
+        "exchange": "router",
+        "binding_key": "logging"},
+    "failed": {
+        "exchange": "router",
+        "binding_key": "failed"}
 }
 
 HEARTBEAT_QUEUES = ["210"]
