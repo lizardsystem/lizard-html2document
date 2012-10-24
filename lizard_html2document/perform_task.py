@@ -56,12 +56,15 @@ def perform_task(body, tasktype_id, worker_nr, broker_logging_handler=None):
 
     log.debug("Prepare work dir.")
     exefile = settings.PATH_CONVERTER_PROGRAM
+    log.debug("Set work dir.")
     work_dir = os.path.join(settings.WORK_DIR, worker_nr)
+    log.debug("set html filepath")
     html_filepath = os.path.join(
         work_dir, "{0}.{1}".format(unique_code, "htm"))
+    log.debug("set filepath for converted doc.")
     converted_filepath = os.path.join(
         work_dir, "{0}.{1}".format(unique_code, format_ext))
-
+    log.debug("check work der.")
     prepaire_workdir(work_dir, worker_nr, html_filepath, converted_filepath)
     log.debug("set context : {}".format(context))
     save_htmlfile(html_filepath, context)
