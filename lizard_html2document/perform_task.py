@@ -52,9 +52,10 @@ def perform_task(body, tasktype_id, worker_nr, broker_logging_handler=None):
     format_ext = body['format_ext']
     unique_code = body['response_queue']
     success_code = True
+    worker_nr = str(worker_nr)
 
     log.debug("Prepare work dir.")
-    exefile = settings.PATH_CONVERTER_PROGRAMM
+    exefile = settings.PATH_CONVERTER_PROGRAM
     work_dir = os.path.join(settings.WORK_DIR, worker_nr)
     html_filepath = os.path.join(
         work_dir, "{0}.{1}".format(unique_code, "htm"))
