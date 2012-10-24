@@ -12,7 +12,6 @@ def prepaire_workdir(work_dir, worker_nr, html_file, converted_file):
     """
     Create worker dir, remove file.
     """
-    import pdb; pdb.set_trace()
     if not os.path.isdir(work_dir):
         os.makedirs(work_dir)
 
@@ -41,6 +40,14 @@ def set_body(body, converted_file):
     f_in.close()
 
 
+def encode_context(context):
+    try:
+        encoded_context = context.encode("UTF-8")  # Unicode
+    except UnicodeEncodeError:
+        encoded_context = context.encode("ISO-8859-1")  # Latin
+    return encoded_context
+
+
 def perform_task(body, tasktype_id, worker_nr, broker_logging_handler=None):
     """
     Use this function on worker callback.
@@ -49,7 +56,7 @@ def perform_task(body, tasktype_id, worker_nr, broker_logging_handler=None):
     Set the converted file as binary string into messaging body.
     """
     log.debug("Retrieve data from messaging body.")
-    context = body['file']
+    context = encode_context(body['file'])
     format_ext = body['format_ext']
     unique_code = body['response_queue']
     success_code = True
