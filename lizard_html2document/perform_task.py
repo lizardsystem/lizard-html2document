@@ -2,6 +2,7 @@ import logging  # , threading, time, datetime, random, math
 import binascii
 import os
 import subprocess
+import codecs
 
 from django.conf import settings
 
@@ -26,7 +27,7 @@ def save_htmlfile(html_filepath, context):
     """
     Save passed context as html file
     """
-    html_file = open(html_filepath, "w")
+    html_file = codecs.open(html_filepath, encoding='utf-8', mode="w")
     html_file.write(context)
     html_file.close()
 
@@ -40,14 +41,6 @@ def set_body(body, converted_file):
     f_in.close()
 
 
-def encode_context(context):
-    try:
-        encoded_context = context.encode("UTF-8")  # Unicode
-    except UnicodeEncodeError:
-        encoded_context = context.encode("ISO-8859-1")  # Latin
-    return encoded_context
-
-
 def perform_task(body, tasktype_id, worker_nr, broker_logging_handler=None):
     """
     Use this function on worker callback.
@@ -56,7 +49,7 @@ def perform_task(body, tasktype_id, worker_nr, broker_logging_handler=None):
     Set the converted file as binary string into messaging body.
     """
     log.debug("Retrieve data from messaging body.")
-    context = encode_context(body['file'])
+    context = body['file']
     format_ext = body['format_ext']
     unique_code = body['response_queue']
     success_code = True
