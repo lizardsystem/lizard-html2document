@@ -12,6 +12,7 @@ def prepaire_workdir(work_dir, worker_nr, html_file, converted_file):
     """
     Create worker dir, remove file.
     """
+    import pdb; pdb.set_track()
     if not os.path.isdir(work_dir):
         os.makedirs(work_dir)
 
@@ -64,7 +65,7 @@ def perform_task(body, tasktype_id, worker_nr, broker_logging_handler=None):
     log.debug("set filepath for converted doc.")
     converted_filepath = os.path.join(
         work_dir, "{0}.{1}".format(unique_code, format_ext))
-    log.debug("check work der.")
+    log.debug("check work dir.")
     prepaire_workdir(work_dir, worker_nr, html_filepath, converted_filepath)
     log.debug("set context : {}".format(context))
     save_htmlfile(html_filepath, context)
