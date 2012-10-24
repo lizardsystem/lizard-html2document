@@ -12,7 +12,7 @@ def prepaire_workdir(work_dir, worker_nr, html_file, converted_file):
     """
     Create worker dir, remove file.
     """
-    import pdb; pdb.set_track()
+    import pdb; pdb.set_trace()
     if not os.path.isdir(work_dir):
         os.makedirs(work_dir)
 
