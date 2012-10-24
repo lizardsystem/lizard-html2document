@@ -63,6 +63,7 @@ def perform_task(body, tasktype_id, worker_nr, broker_logging_handler=None):
         work_dir, "{0}.{1}".format(unique_code, format_ext))
 
     prepaire_workdir(work_dir, worker_nr, html_filepath, converted_filepath)
+    log.debug("set context : {}".context)
     save_htmlfile(html_filepath, context)
     log.debug("Convert file.")
     command_line = [exefile, work_dir, unique_code, format_ext]
