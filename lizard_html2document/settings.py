@@ -77,6 +77,25 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BUILDOUT_DIR, 'var', 'static')
 MEDIA_ROOT = os.path.join(BUILDOUT_DIR, 'var', 'media')
 
+# RabbitMQ settings
+TASK_CODE = "210"
+
+QUEUES = {
+    TASK_CODE: {
+        "exchange": "router",
+        "binding_key": TASK_CODE},
+    "logging": {
+        "exchange": "router",
+        "binding_key": "logging"},
+    "failed": {
+        "exchange": "router",
+        "binding_key": "failed"}
+}
+
+HEARTBEAT_QUEUES = [TASK_CODE]
+
+PERFORM_TASK_MODULE = "lizard_html2document.perform_task"
+PERFORM_TASK_FUNCTION = "perform_task"
 
 try:
     # Import local settings that aren't stored in svn/git.

@@ -1,13 +1,16 @@
 #!/usr/bin/python
 # (c) Nelen & Schuurmans.  GPL licensed.
 
+import logging
+import binascii
+
+from django.utils import simplejson
+
 from lizard_html2document.action_converter_workflow import (
     ActionConverterPublisher,)
 from lizard_worker.worker.broker_connection import BrokerConnection
 from lizard_worker.worker.message_logging_handler import AMQPMessageHandler
-#from lizard_worker.models import WorkflowTask
-from django.conf import settings
-import logging
+
 log = logging.getLogger("converter.start_rpc_client")
 
 
@@ -17,6 +20,7 @@ class ConverterRpcClient(object):
     """
     def __init__(self, log_level='INFO'):
         self.numeric_level = getattr(logging, log_level.upper(), None)
+        self.document = None
         self.connection = BrokerConnection().connect_to_broker()
         self.channel = self.connection.channel()
         result = self.channel.queue_declare(exclusive=True)
@@ -27,22 +31,15 @@ class ConverterRpcClient(object):
 
     def on_response(self, ch, method, props, body):
         self.response = body
-        print "On_response"
-        # f = open("/tmp/test10.docx", "w")
-        # f.write(body.get("MESSAGE"))
-        # f.close()
+        self.body = simplejson.loads(body)
+        self.document = binascii.unhexlify(self.body["file"])
         if self.connection.is_open:
             self.connection.close()
-        #if connection is None:
-        #    log.error("Could not connect to broker.")
-        #return
 
-    def call(self, html, convert_to, queue_code):
-        html = "<html><body>Test</body></html>"
-        keys = settings.QUEUES.keys()
+    def call(self, html, format_ext, queue_code):
         self.response = None
         action = ActionConverterPublisher(
-            self.connection, queue_code, html, self.response_queue, convert_to)
+            self.connection, queue_code, html, self.response_queue, format_ext)
 
         logging.handlers.AMQPMessageHandler = AMQPMessageHandler
         broker_handler = logging.handlers.AMQPMessageHandler(
@@ -53,4 +50,4 @@ class ConverterRpcClient(object):
 
         while self.response is None:
             self.connection.process_data_events()
-        return success
+        return self.document

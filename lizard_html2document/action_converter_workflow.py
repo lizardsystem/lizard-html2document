@@ -1,10 +1,6 @@
 #!/usr/bin/python
 # (c) Nelen & Schuurmans.  GPL licensed.
 
-#from lizard_worker.models import Workflow
-#from lizard_worker.models import WorkflowTask
-#from lizard_worker.models import WorkflowTemplate
-#from lizard_worker.models import WorkflowTemplateTask
 from lizard_worker.worker.action import Action
 from lizard_html2document.converter_messaging_body import ConverterBody
 
@@ -19,13 +15,13 @@ class ActionConverterPublisher(Action):
     Publish a message to convert html.
     """
     def __init__(self, connection, queue_code="210", html="",
-                 response_queue="999", convert_to="doc"):
+                 response_queue="999", format_ext="doc"):
         self.connection = connection
         self.log = logging.getLogger(__name__)
         self.channel = self.connection.channel()
         self.queue_code = queue_code
         self.response_queue = response_queue
-        self.convert_to = convert_to
+        self.format_ext = format_ext
         self.html = html
 
     def perform(self):
@@ -54,8 +50,8 @@ class ActionConverterPublisher(Action):
         failures = {self.queue_code: 0}
         self.body = ConverterBody().body
         self.body[ConverterBody.TIME] = time.time()
-        self.body[ConverterBody.HTML] = self.html
-        self.body[ConverterBody.CONVERT_TO] = self.convert_to
+        self.body[ConverterBody.FILE] = self.html
+        self.body[ConverterBody.FORMAT_EXT] = self.format_ext
         self.body[ConverterBody.RESPONSE_QUEUE] = self.response_queue
         self.body[ConverterBody.INSTRUCTION] = instruction
         self.body[ConverterBody.CURR_TASK_CODE] = self.queue_code
