@@ -1,5 +1,6 @@
 import logging  # , threading, time, datetime, random, math
 import binascii
+import base64
 import os
 import subprocess
 import codecs
@@ -37,7 +38,8 @@ def set_body(body, converted_file):
     Set file to the messaging body
     """
     f_in = open(converted_file, "rb")
-    body['file'] = binascii.hexlify(f_in.read())
+    #body['file'] = binascii.hexlify(f_in.read())
+    body['file'] = base64.b64encode(f_in.read())
     f_in.close()
 
 
