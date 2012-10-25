@@ -74,6 +74,6 @@ def perform_task(body, tasktype_id, worker_nr, broker_logging_handler=None):
     subprocess.Popen(command_line).wait()
     log.debug("Set converted file to messaging body.")
     set_body(body, converted_filepath)
-    prepaire_workdir(work_dir, worker_nr, html_filepath, converted_filepath)
+    #prepaire_workdir(work_dir, worker_nr, html_filepath, converted_filepath)
 
     return success_code
