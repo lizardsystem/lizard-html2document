@@ -38,8 +38,8 @@ def set_body(body, converted_file):
     Set file to the messaging body
     """
     f_in = open(converted_file, "rb")
-    #body['file'] = binascii.hexlify(f_in.read())
-    body['file'] = base64.b64encode(f_in.read())
+    body['file'] = binascii.hexlify(f_in.read())
+    #body['file'] = base64.b64encode(f_in.read())
     f_in.close()
 
 
@@ -50,6 +50,7 @@ def perform_task(body, tasktype_id, worker_nr, broker_logging_handler=None):
     using external program.
     Set the converted file as binary string into messaging body.
     """
+    
     log.debug("Retrieve data from messaging body.")
     context = body['file']
     format_ext = body['format_ext']

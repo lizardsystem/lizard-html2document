@@ -33,8 +33,8 @@ class ConverterRpcClient(object):
     def on_response(self, ch, method, props, body):
         self.response = body
         self.body = simplejson.loads(body)
-        #self.document = binascii.unhexlify(self.body["file"])
-        self.document = base64.b64encode(self.body["file"])
+        self.document = binascii.unhexlify(self.body["file"])
+        #self.document = base64.b64encode(self.body["file"])
         if self.connection.is_open:
             self.connection.close()
 
