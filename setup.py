@@ -12,7 +12,7 @@ install_requires = [
     'Django',
     'django-extensions',
     'django-nose',
-    'lizard-worker',
+    'lizard-worker >= 0.8',
     ],
 
 tests_require = [
