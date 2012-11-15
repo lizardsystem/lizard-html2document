@@ -2,7 +2,7 @@ Changelog of lizard-html2document
 ===================================================
 
 
-0.2 (unreleased)
+0.2 (2012-11-15)
 ----------------
 
 - Pinned lizard-worker to 0.8
