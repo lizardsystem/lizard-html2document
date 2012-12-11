@@ -2,6 +2,12 @@ Changelog of lizard-html2document
 ===================================================
 
 
+0.4 (unreleased)
+----------------
+
+- Nothing changed yet.
+
+
 0.3 (2012-12-11)
 ----------------
 
