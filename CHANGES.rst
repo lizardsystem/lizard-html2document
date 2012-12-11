@@ -2,7 +2,7 @@ Changelog of lizard-html2document
 ===================================================
 
 
-0.3 (unreleased)
+0.3 (2012-12-11)
 ----------------
 
 - Delete tasks directory.
