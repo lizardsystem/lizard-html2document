@@ -7,6 +7,8 @@ Changelog of lizard-html2document
 
 - Delete tasks directory.
 
+- Edit README.rst
+
 
 0.2 (2012-11-15)
 ----------------
